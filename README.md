@@ -63,3 +63,5 @@ for (auto Vertex : Path)
 }
 std::cout << "\nAnd the smallest weight is: " << SmallestWeight << std::endl;
 ```
+
+## 3. Prim
