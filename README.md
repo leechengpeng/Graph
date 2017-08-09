@@ -33,8 +33,6 @@ for (auto Index : AdjancencyVertices)
 {
 	std::cout << SourceIndex <<" -> " << Index << ": " << AdjancencyMatrix.getEdgeWeight(SourceIndex, Index) << std::endl;
 }
-
-return 0;
 ```
 
 ## 2. Dijkstra
