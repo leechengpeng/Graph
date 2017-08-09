@@ -40,3 +40,26 @@ for (auto Index : AdjancencyVertices)
 ## 2. Dijkstra
 [Dijkstra.hpp](Dijkstra.hpp)
 #### Usage:
+```C++
+constexpr unsigned Vertices = 4;
+
+Graph::AdjancencyMatrix<int, Vertices> AdjancencyMatrix;
+AdjancencyMatrix.addEdge(0, 1, 5);	// Vertex 0 -> 1: weight 5
+AdjancencyMatrix.addEdge(0, 2, 1);	// Vertex 0 -> 2: weight 1
+AdjancencyMatrix.addEdge(0, 3, 8);	// Vertex 0 -> 3: weight 8
+AdjancencyMatrix.addEdge(1, 2, 3);	// Vertex 1 -> 2: weight 3
+AdjancencyMatrix.addEdge(2, 3, 1);	// Vertex 2 -> 3: weight 1
+
+size_t SourceVertex = 0;
+size_t DestVertex = 1;
+std::vector<size_t> Path;
+
+int SmallestWeight = Graph::dijkstra(AdjancencyMatrix, SourceVertex, DestVertex, Path);
+
+std::cout << "vertex " << SourceVertex << " to vertex " << DestVertex << "`s shortest path is: " << std::endl;
+for (auto Vertex : Path)
+{
+	std::cout << Vertex << " ";
+}
+std::cout << "\nAnd the smallest weight is: " << SmallestWeight << std::endl;
+```
