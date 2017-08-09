@@ -16,15 +16,15 @@ AdjancencyMatrix.addEdge(2, 3, 1);	// Vertex 2 -> 3: weight 1
 std::cout << "Method 1: " << std::endl;
 if (AdjancencyMatrix.connect(0, 1))
 {
-  std::cout << "0 -> 1: " << AdjancencyMatrix.getEdgeWeight(0, 1) << std::endl;
+	std::cout << "0 -> 1: " << AdjancencyMatrix.getEdgeWeight(0, 1) << std::endl;
 }
 if (AdjancencyMatrix.connect(0, 2))
 {
-  std::cout << "0 -> 2: " << AdjancencyMatrix.getEdgeWeight(0, 2) << std::endl;
+	std::cout << "0 -> 2: " << AdjancencyMatrix.getEdgeWeight(0, 2) << std::endl;
 }
 if (AdjancencyMatrix.connect(0, 3))
 {
-  std::cout << "0 -> 3: " << AdjancencyMatrix.getEdgeWeight(0, 3) << std::endl;
+	std::cout << "0 -> 3: " << AdjancencyMatrix.getEdgeWeight(0, 3) << std::endl;
 }
 
 // Method 2: visit inner elment
@@ -33,6 +33,8 @@ auto AdjancencyVertices = AdjancencyMatrix.getAdjancencyVertices(SourceIndex);
 std::cout << "Method 2: " << std::endl;
 for (auto Index : AdjancencyVertices)
 {
-  std::cout << SourceIndex <<" -> " << Index << ": " << AdjancencyMatrix.getEdgeWeight(SourceIndex, Index) << std::endl;
+	std::cout << SourceIndex <<" -> " << Index << ": " << AdjancencyMatrix.getEdgeWeight(SourceIndex, Index) << std::endl;
 }
+
+return 0;
 ```
