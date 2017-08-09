@@ -1,5 +1,5 @@
 # Graph
-## Adjancency Matrix
+## 1. Adjancency Matrix
 [AdjancencyMatrix.hpp](AdjancencyMatrix.hpp)
 #### Usage:
 ```C++
