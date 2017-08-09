@@ -1,2 +1,4 @@
 # Graph
-Graph Algorithm: Dijkstra's, Prim and so on.
+- [Adjancency Matrix](Adjancency_Matrix.md)
+
+
