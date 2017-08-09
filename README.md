@@ -36,3 +36,7 @@ for (auto Index : AdjancencyVertices)
 
 return 0;
 ```
+
+## 2. Dijkstra
+[Dijkstra.hpp](Dijkstra.hpp)
+#### Usage:
