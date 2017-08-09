@@ -1,9 +1,7 @@
 # Graph
 ## Adjancency Matrix
-#### Source Code
 [AdjancencyMatrix.hpp](AdjancencyMatrix.hpp)
-
-#### Usage
+#### Usage:
 ```C++
 Graph::AdjancencyMatrix<int, 4> AdjancencyMatrix;
 AdjancencyMatrix.addEdge(0, 1, 5);	// Vertex 0 -> 1: weight 5
