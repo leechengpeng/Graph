@@ -65,3 +65,16 @@ std::cout << "\nAnd the smallest weight is: " << SmallestWeight << std::endl;
 ```
 
 ## 3. Prim
+```C++
+constexpr unsigned Vertices = 4;
+
+Graph::AdjancencyMatrix<int, Vertices> AdjancencyMatrix;
+AdjancencyMatrix.addEdge(0, 1, 5);	// Vertex 0 -> 1: weight 5
+AdjancencyMatrix.addEdge(0, 2, 1);	// Vertex 0 -> 2: weight 1
+AdjancencyMatrix.addEdge(0, 3, 8);	// Vertex 0 -> 3: weight 8
+AdjancencyMatrix.addEdge(1, 2, 3);	// Vertex 1 -> 2: weight 3
+AdjancencyMatrix.addEdge(2, 3, 1);	// Vertex 2 -> 3: weight 1
+
+Graph::AdjancencyMatrix<int, Vertices> MST;
+Graph::prim(AdjancencyMatrix, MST);
+```
