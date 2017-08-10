@@ -76,5 +76,5 @@ AdjancencyMatrix.addEdge(1, 2, 3);	// Vertex 1 -> 2: weight 3
 AdjancencyMatrix.addEdge(2, 3, 1);	// Vertex 2 -> 3: weight 1
 
 Graph::AdjancencyMatrix<int, Vertices> MST;
-Graph::prim(AdjancencyMatrix, MST);
+int MinWeight = Graph::prim(AdjancencyMatrix, MST);
 ```
