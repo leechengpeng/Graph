@@ -33,14 +33,14 @@ namespace Graph
 	}
 
 	template <typename T, unsigned N>
-	bool AdjancencyMatrix<T, N>::connect(size_t vSourceIndex, size_t vDestIndex) const
+	inline bool AdjancencyMatrix<T, N>::connect(size_t vSourceIndex, size_t vDestIndex) const
 	{
 		_ASSERT(vSourceIndex < N && vDestIndex < N);
 		return m_Matrix[vSourceIndex][vDestIndex] != 0;
 	}
 
 	template <typename T, unsigned N>
-	T AdjancencyMatrix<T, N>::getEdgeWeight(size_t vSourceIndex, size_t vDestIndex) const
+	inline T AdjancencyMatrix<T, N>::getEdgeWeight(size_t vSourceIndex, size_t vDestIndex) const
 	{
 		_ASSERT(vSourceIndex < N && vDestIndex < N);
 		return m_Matrix[vSourceIndex][vDestIndex];
