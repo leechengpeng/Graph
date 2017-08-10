@@ -70,6 +70,57 @@ namespace Graph
 		return Dest[vDest];
 	}
 
+	template <typename T, unsigned N>
+	T prim(const AdjancencyMatrix<T, N>& vAdjancencyMatrix, std::vector<size_t>& vMST)
+	{
+		_ASSERT(vMST);
+		static T INF = _TYPE_MAX<T>();
+
+		size_t Source = 0;
+
+		T	 Dest[N]	= { INF };
+		bool Visited[N] = { false };
+
+		for (size_t i = 0; i < N; ++i)
+		{
+			if (vAdjancencyMatrix.connect(Source, i))
+			{
+				Dest[i] = vAdjancencyMatrix.getEdgeWeight(Source, i);
+			}
+		}
+		Visited[Source] = true;
+
+		T MSTWeight = T();
+		for (size_t i = 1; i < N; ++i)
+		{
+			T MinEdge = INF;
+			size_t MinIndex = 0;
+			for (size_t k = 0; k < N; ++k)
+			{
+				if (!Visited[k] && Dest[k] <= MinEdge)
+				{
+					MinIndex = k;
+					MinEdge  = Dest[k];
+				}
+			}
+			Visited[MinIndex] = true;
+
+			vMST.push_back(MinIndex);
+			MSTWeight += MinEdge;
+
+			for (size_t k = 0; k < N; ++k)
+			{
+				if (!Visited[k] && vAdjancencyMatrix.connect(MinIndex, k) 
+					&& vAdjancencyMatrix.getEdgeWeight(MinIndex, k) < Dest[k])
+				{
+					Dest[k] = vAdjancencyMatrix.getEdgeWeight(MinIndex, k);
+				}
+			}
+		}
+
+		return MSTWeight;
+	}
+
 	template <typename T>
 	inline T _TYPE_MAX()
 	{
