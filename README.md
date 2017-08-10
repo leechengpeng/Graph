@@ -2,8 +2,7 @@
 > **Compile Environment**：VS2015
 
 ## 1. Adjancency Matrix
-[AdjancencyMatrix.hpp](AdjancencyMatrix.hpp)
-#### Usage:
+#### Usage: `#include "AdjancencyMatrix.hpp"`
 ```C++
 Graph::AdjancencyMatrix<int, 4> AdjancencyMatrix;
 AdjancencyMatrix.addEdge(0, 1, 5);	// Vertex 0 -> 1: weight 5
@@ -38,8 +37,7 @@ for (auto Index : AdjancencyVertices)
 ```
 
 ## 2. Dijkstra
-[Dijkstra.hpp](Dijkstra.hpp)
-#### Usage:
+#### Usage: `#include "Graph.hpp"`
 ```C++
 constexpr unsigned Vertices = 4;
 
@@ -65,6 +63,7 @@ std::cout << "\nAnd the smallest weight is: " << SmallestWeight << std::endl;
 ```
 
 ## 3. Prim
+#### Usage: `#include "Graph.hpp"`
 ```C++
 constexpr unsigned Vertices = 4;
 
