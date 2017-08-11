@@ -1,150 +1,65 @@
 #pragma once
 #include <vector>
-#include <climits>
-#include "AdjancencyMatrix.hpp"
 
 namespace Graph
 {
 	template <typename T, unsigned N>
-	T dijkstra(const AdjancencyMatrix<T, N>& vAdjancencyMatrix, size_t vSource, size_t vDest, std::vector<size_t>& vPath)
+	class AdjancencyMatrix
 	{
-		_ASSERT(vSource < N && vDest < N && vPath.empty());
+	public:
+		AdjancencyMatrix() : m_Matrix() {}
 
-		T      Dest[N] = { 0 };
-		size_t PrevVertices[N] = { 0 };
+		void addEdge(size_t vSourceIndex, size_t vDestIndex, T vWeight = T());
+		bool connect(size_t vSourceIndex, size_t vDestIndex) const;
+		T    getEdgeWeight(size_t vSourceIndex, size_t vDestIndex) const;
 
-		Graph::dijkstra(vAdjancencyMatrix, vSource, PrevVertices, Dest);
+		// TODO：Using iterator to visit inner element
+		std::vector<size_t> getAdjancencyVertices(size_t vVertexIndex) const;
 
-		std::vector<size_t> TempPath;
-		for (size_t i = vDest; i != vSource; i = PrevVertices[i])
-		{
-			TempPath.push_back(i);
-		}
-		TempPath.push_back(vSource);
-
-		for (auto Iter = TempPath.rbegin(); Iter != TempPath.rend(); ++Iter)
-		{
-			vPath.push_back(*Iter);
-		}
-
-		return Dest[vDest];
-	}
+	private:
+		T m_Matrix[N][N];
+	};
 
 	template <typename T, unsigned N>
-	void dijkstra(const AdjancencyMatrix<T, N>& vAdjancencyMatrix, size_t vSource, size_t vPrevVertex[], T vDest[])
+	void AdjancencyMatrix<T, N>::addEdge(size_t vSourceIndex, size_t vDestIndex, T vWeight)
 	{
-		_ASSERT(vSource < N);
-		static T INF = _TYPE_MAX<T>();
-
-		bool Visited[N] = { false };
-		for (size_t i = 0; i < N; ++i)
+		_ASSERT(vSourceIndex < N && vDestIndex < N);
+		// NOTE：Vertex X to X`s self default zero
+		if (vSourceIndex != vDestIndex)
 		{
-			vPrevVertex[i] = vSource;
-			vDest[i] = INF;
-		}
-		vDest[vSource] = T();
-
-		for (size_t i = 0; i < N; ++i)
-		{
-			T MinWeight = INF;
-			size_t MinWeightIndex = 0;
-			for (size_t k = 0; k < N; ++k)
-			{
-				if (!Visited[k] && vDest[k] <= MinWeight)
-				{
-					MinWeightIndex = k;
-					MinWeight = vDest[k];
-				}
-			}
-			Visited[MinWeightIndex] = true;
-
-			for (size_t k = 0; k < N; ++k)
-			{
-				if (!Visited[k] && vAdjancencyMatrix.connect(MinWeightIndex, k)
-					&& MinWeight + vAdjancencyMatrix.getEdgeWeight(MinWeightIndex, k) < vDest[k])
-				{
-					vDest[k] = MinWeight + vAdjancencyMatrix.getEdgeWeight(MinWeightIndex, k);
-					vPrevVertex[k] = MinWeightIndex;
-				}
-			}
+			m_Matrix[vSourceIndex][vDestIndex] = vWeight;
+			m_Matrix[vDestIndex][vSourceIndex] = vWeight;
 		}
 	}
 
 	template <typename T, unsigned N>
-	T prim(const AdjancencyMatrix<T, N>& vAdjancencyMatrix, AdjancencyMatrix<T, N>& voMST)
+	inline bool AdjancencyMatrix<T, N>::connect(size_t vSourceIndex, size_t vDestIndex) const
 	{
-		static T INF = _TYPE_MAX<T>();
-
-		T	   Dest[N]	     = { INF };
-		size_t PrevVertex[N] = { 0 };
-		size_t Source = 0;
-
-		T MSTWeight = prim(vAdjancencyMatrix, Source, PrevVertex, Dest);
-
-		for (size_t i = 0; i < N; ++i)
-		{
-			if (i != Source)
-			{
-				voMST.addEdge(i, PrevVertex[i], Dest[i]);
-			}
-		}
-
-		return MSTWeight;
+		_ASSERT(vSourceIndex < N && vDestIndex < N);
+		return m_Matrix[vSourceIndex][vDestIndex] != 0;
 	}
 
 	template <typename T, unsigned N>
-	T prim(const AdjancencyMatrix<T, N>& vAdjancencyMatrix, size_t vSource, size_t vPrevVertex[], T vDest[])
+	inline T AdjancencyMatrix<T, N>::getEdgeWeight(size_t vSourceIndex, size_t vDestIndex) const
 	{
-		_ASSERT(vSource < N);
-		static T INF = _TYPE_MAX<T>();
-
-		bool Visited[N] = { false };
-		for (size_t i = 0; i < N; ++i)
-		{
-			if (vAdjancencyMatrix.connect(vSource, i))
-			{
-				vDest[i] = vAdjancencyMatrix.getEdgeWeight(vSource, i);
-			}
-		}
-		Visited[vSource] = true;
-
-		T MSTWeight = T();
-		for (size_t i = 1; i < N; ++i)
-		{
-			T MinEdge = INF;
-			size_t MinIndex = 0;
-			for (size_t k = 0; k < N; ++k)
-			{
-				if (!Visited[k] && vDest[k] <= MinEdge)
-				{
-					MinIndex = k;
-					MinEdge  = vDest[k];
-				}
-			}
-			Visited[MinIndex] = true;
-
-			MSTWeight += MinEdge;
-
-			for (size_t k = 0; k < N; ++k)
-			{
-				if (!Visited[k] && vAdjancencyMatrix.connect(MinIndex, k) 
-					&& vAdjancencyMatrix.getEdgeWeight(MinIndex, k) < vDest[k])
-				{
-					vDest[k] = vAdjancencyMatrix.getEdgeWeight(MinIndex, k);
-					vPrevVertex[k] = MinIndex;
-				}
-			}
-		}
-
-		return MSTWeight;
+		_ASSERT(vSourceIndex < N && vDestIndex < N);
+		return m_Matrix[vSourceIndex][vDestIndex];
 	}
 
-	template <typename T>
-	inline T _TYPE_MAX()
+	template <typename T, unsigned N>
+	std::vector<size_t> AdjancencyMatrix<T, N>::getAdjancencyVertices(size_t vVertexIndex) const
 	{
-		T Max = T();
-		Max |= _UI64_MAX;
+		_ASSERT(vVertexIndex < N);
+		
+		std::vector<size_t> AdjancencyVertices;
+		for (size_t i = 0; i < N; ++i)
+		{
+			if (m_Matrix[vVertexIndex][i] != 0)
+			{
+				AdjancencyVertices.push_back(i);
+			}
+		}
 
-		return Max == -1 ? Max ^ (Max << (sizeof(T) * 8 - 1)) : Max;
+		return AdjancencyVertices;
 	}
 }
